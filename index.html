@@ -13,7 +13,7 @@
     <title>\uc0\u21488 \u28771 \u22823 \u23500 \u32705  - \u26480 \u21733 \u23560 \u23660 \u29256 </title>\
     <script src="https://cdn.tailwindcss.com"></script>\
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>\
-    <!-- Firebase SDKs (Compat Version for Easy Integration) -->\
+    <!-- Firebase SDKs -->\
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>\
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>\
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>\
@@ -49,7 +49,7 @@
 </head>\
 <body class="bg-slate-200 overflow-hidden font-sans">\
     <div id="app" v-cloak>\
-        <!-- Login Screen -->\
+        <!-- \uc0\u30331 \u20837 \u30059 \u38754  -->\
         <div v-if="view === 'login'" class="h-screen flex items-center justify-center p-4">\
             <div class="bg-white p-10 rounded-[40px] shadow-2xl text-center max-w-md w-full animate-popIn">\
                 <h1 class="text-4xl font-black mb-8 text-slate-800 italic tracking-tighter uppercase">Taiwan Monopoly</h1>\
@@ -64,7 +64,7 @@
             </div>\
         </div>\
 \
-        <!-- Lobby Screen -->\
+        <!-- \uc0\u22823 \u24307 \u30059 \u38754  -->\
         <div v-else-if="view === 'lobby'" class="h-screen p-6 flex flex-col items-center overflow-auto">\
             <div class="max-w-2xl w-full flex justify-between items-center bg-white p-6 rounded-3xl shadow-sm mb-6">\
                 <h2 class="text-2xl font-black text-slate-800">\uc0\u36938 \u25138 \u22823 \u24307 </h2>\
@@ -79,7 +79,7 @@
             </div>\
         </div>\
 \
-        <!-- Waiting Screen -->\
+        <!-- \uc0\u31561 \u24453 \u30059 \u38754  -->\
         <div v-else-if="view === 'waiting'" class="h-screen flex flex-col items-center justify-center p-6">\
             <div class="bg-white p-10 rounded-[40px] shadow-xl w-full max-w-md text-center">\
                 <h2 class="text-2xl font-black mb-6">\uc0\u31561 \u24453 \u38283 \u25136 ...</h2>\
@@ -97,16 +97,16 @@
             </div>\
         </div>\
 \
-        <!-- Game Screen -->\
+        <!-- \uc0\u36938 \u25138 \u30059 \u38754  -->\
         <div v-else-if="view === 'game'" class="h-screen flex items-center justify-center p-2 relative overflow-hidden">\
             <div v-if="eventToast" class="absolute top-10 left-1/2 -translate-x-1/2 z-[300] bg-rose-500 text-white px-10 py-4 rounded-full shadow-2xl border-4 border-white font-black animate-bounce">\{\{ eventToast \}\}</div>\
             \
-            <!-- Money Floating Particles -->\
+            <!-- \uc0\u37329 \u37666 \u28418 \u28014 \u29305 \u25928  -->\
             <div v-for="p in moneyParticles" :key="p.id" class="money-particle" :style="\{ left: p.x+'%', top: p.y+'%', color: p.amount.toString().startsWith('-') ? '#FF6B6B' : '#ffd700' \}">\
                 \{\{ p.amount \}\}\
             </div>\
 \
-            <!-- Victory Screen -->\
+            <!-- \uc0\u21213 \u21033 \u30059 \u38754  -->\
             <div v-if="winner" class="absolute inset-0 z-[600] bg-black/80 flex flex-col items-center justify-center text-white p-10 animate-popIn">\
                 <div class="text-9xl mb-4 animate-bounce">\uc0\u55356 \u57286 </div>\
                 <h1 class="text-6xl font-black mb-2">\{\{ winner.name \}\}</h1>\
@@ -114,7 +114,7 @@
                 <button @click="location.reload()" class="bg-rose-400 px-10 py-4 rounded-2xl font-black text-2xl">\uc0\u20877 \u29609 \u19968 \u23616 </button>\
             </div>\
 \
-            <!-- Board -->\
+            <!-- \uc0\u22320 \u22294 \u26827 \u30436  -->\
             <div class="bg-white rounded-[40px] shadow-2xl w-full h-full max-w-[1200px] max-h-[900px] grid grid-cols-11 grid-rows-9 p-2 gap-1 relative border-4 border-white">\
                 <div v-for="(tile, i) in BOARD" :key="i" :style="getGridStyle(i)" class="relative border border-slate-100 flex flex-col items-center justify-center rounded-xl overflow-hidden shadow-sm p-1 bg-white">\
                     <div v-if="getOwner(i)" class="absolute bottom-0 inset-x-0 h-1" :style="\{backgroundColor: getOwner(i).avatar.color\}"></div>\
@@ -126,7 +126,7 @@
                         <div class="h-[12px]"><div v-if="tile.price" class="text-[10px] font-black text-rose-500">$\{\{ tile.price \}\}</div></div>\
                     </div>\
 \
-                    <!-- Players on Tile -->\
+                    <!-- \uc0\u29609 \u23478 \u26827 \u23376  -->\
                     <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-20 flex-wrap gap-0.5">\
                         <div v-for="p in getPlayersAt(i)" :key="p.uid" :class="['w-7 h-7 md:w-9 md:h-9 rounded-full border-2 border-white flex items-center justify-center text-lg shadow-md transition-all duration-300', jumpStates[p.uid] ? 'jump-animation' : '']" :style="\{backgroundColor: p.avatar.color\}">\
                             \{\{ p.avatar.emoji \}\}\
@@ -134,9 +134,9 @@
                     </div>\
                 </div>\
 \
-                <!-- Center Area -->\
+                <!-- \uc0\u20013 \u24515 \u21312 \u22495  -->\
                 <div class="col-start-2 col-end-11 row-start-2 row-end-9 bg-slate-50/50 rounded-3xl m-1 relative flex items-center justify-center">\
-                    <!-- Player List -->\
+                    <!-- \uc0\u29609 \u23478 \u36039 \u35338  -->\
                     <div class="absolute top-6 left-6 space-y-2">\
                         <div v-for="(p, idx) in currentRoom?.players" :key="p.uid" :class="['flex items-center gap-3 p-3 rounded-2xl transition-all', p.money < 0 ? 'opacity-40' : currentRoom.turn === idx ? 'bg-white shadow-xl ring-2 ring-rose-400 scale-105' : 'bg-white/40']">\
                             <div class="text-3xl">\{\{ p.money < 0 ? '\uc0\u55357 \u56448 ' : p.avatar.emoji \}\}</div>\
@@ -147,7 +147,7 @@
                         </div>\
                     </div>\
 \
-                    <!-- Rolling Dice -->\
+                    <!-- \uc0\u39600 \u23376  -->\
                     <div class="flex flex-col items-center">\
                         <div class="dice-container">\
                             <div :class="['dice', rolling ? 'rolling' : '', 'show-' + dice]">\
@@ -162,7 +162,7 @@
                         <button v-if="canRoll" @click="rollDiceAction" class="mt-8 bg-rose-400 text-white px-12 py-4 rounded-full font-black text-xl shadow-xl hover:bg-rose-500 transition-all">\uc0\u25842 \u39600 \u23376 </button>\
                     </div>\
 \
-                    <!-- Logs -->\
+                    <!-- \uc0\u25136 \u22577  -->\
                     <div class="absolute right-6 bottom-6 w-64 bg-white/70 rounded-3xl p-5 shadow-xl border border-white">\
                         <h3 class="text-[10px] font-black text-slate-400 uppercase mb-2">\uc0\u21363 \u26178 \u25136 \u22577 </h3>\
                         <div class="space-y-2">\
@@ -174,7 +174,7 @@
                 </div>\
             </div>\
 \
-            <!-- Interative Modal -->\
+            <!-- \uc0\u20114 \u21205 \u24392 \u31383  -->\
             <div v-if="modal" class="absolute inset-0 bg-black/40 backdrop-blur-sm z-[500] flex items-center justify-center">\
                 <div class="bg-white p-10 rounded-[40px] shadow-2xl text-center max-w-sm w-full animate-popIn">\
                     <div class="text-6xl mb-4">\{\{ modal.tile.icon \}\}</div>\
@@ -192,9 +192,8 @@
     <script>\
         const \{ createApp, ref, computed, onMounted \} = Vue;\
 \
-        // Firebase Config from User Screenshots\
         const firebaseConfig = \{\
-            apiKey: "AIzaSyC7C... (\uc0\u30053 )", // \u23526 \u38555 \u31243 \u24335 \u30908 \u26371 \u22635 \u20837 \u23436 \u25972 \u37329 \u38000 \
+            apiKey: "AIzaSyC7C... (\uc0\u35531 \u26356 \u25563 \u28858 \u20320 \u30340 \u23436 \u25972 \u37329 \u38000 )", \
             authDomain: "monopoly-a3597.firebaseapp.com",\
             projectId: "monopoly-a3597",\
             storageBucket: "monopoly-a3597.firebasestorage.app",\
@@ -203,7 +202,6 @@
             measurementId: "G-6QNS4XW86C"\
         \};\
 \
-        // Initialize Firebase\
         firebase.initializeApp(firebaseConfig);\
         const db = firebase.firestore();\
         const auth = firebase.auth();\
